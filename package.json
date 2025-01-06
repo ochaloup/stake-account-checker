@@ -1,0 +1,17 @@
+{
+    "name": "marinade-balance",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "tsc",
+      "start": "node dist/index.js"
+    },
+    "dependencies": {
+      "@marinade.finance/marinade-ts-sdk": "^5.0.2",
+      "@solana/web3.js": "^1.87.6"
+    },
+    "devDependencies": {
+      "typescript": "^5.2.2",
+      "@types/node": "^20.8.10"
+    }
+  }
