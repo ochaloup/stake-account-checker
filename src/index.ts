@@ -14,6 +14,7 @@ class MarinadeNativeChecker {
     const config = new NativeStakingConfig({ connection: new Connection(rpcEndpoint) })
     this.marinade = new NativeStakingSDK(config)
     this.address = address;
+    console.log("MarinadeNativeChecker initialized with address: ", address, " and rpcEndpoint: ", rpcEndpoint);
   }
 
   private async fetchMarinadeBalance(): Promise<Staking> {
@@ -41,7 +42,6 @@ class MarinadeNativeChecker {
   }
 }
 
-// Usage
 const address = process.env.WALLET_ADDRESS
 if (!address) {
     throw new Error('WALLET_ADDRESS is required. Set up env variable with your wallet address');
