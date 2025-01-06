@@ -1,18 +1,18 @@
+import { NativeStakingConfig, NativeStakingSDK } from '@marinade.finance/native-staking-sdk';
 import { Connection, PublicKey } from '@solana/web3.js';
-import { MarinadeState } from '@marinade.finance/marinade-ts-sdk';
 
 interface Staking {
   accounts: number;
   balance: number;
 }
 
-class MarinadeBalanceChecker {
-  private marinade: MarinadeState;
+class MarinadeNativeChecker {
+  private marinade: NativeStakingSDK;
   private address: string;
 
   constructor(address: string, rpcEndpoint: string) {
-    const connection = new Connection(rpcEndpoint);
-    this.marinade = new MarinadeState(connection);
+    const config = new NativeStakingConfig({ connection: new Connection(rpcEndpoint) })
+    this.marinade = new NativeStakingSDK(config)
     this.address = address;
   }
 
@@ -42,8 +42,11 @@ class MarinadeBalanceChecker {
 }
 
 // Usage
-const address = process.env.WALLET_ADDRESS || '';
-const rpcEndpoint = process.env.RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com';
+const address = process.env.WALLET_ADDRESS
+if (!address) {
+    throw new Error('WALLET_ADDRESS is required. Set up env variable with your wallet address');
+}
+const rpcEndpoint = process.env.RPC_URL || 'https://api.mainnet-beta.solana.com';
 
-const checker = new MarinadeBalanceChecker(address, rpcEndpoint);
+const checker = new MarinadeNativeChecker(address, rpcEndpoint);
 checker.checkBalance();
